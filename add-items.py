@@ -55,18 +55,26 @@ def add_item(item, container, position=None):
             container.insert(position, item)
             return container
 
+    elif isinstance(container, dict):
+
+        if len(item) == 2:
+            for key, value in item:
+                container[key] = value
+        else:
+            container[item] = None
+
     else:
 
         pass
 
 if __name__ == '__main__':
 
-    container = [1, 2, 3, 4]
+    container = {1: 'a', 2: 'b', 3: 'c', 4: 'd'}
     container = add_item(9, container)
-    # container is now [1, 2, 3, 4, 9]
+    # container is now {1: 'a', 2: 'b', 3: 'c', 4: 'd', 9: None}
     print(container)
 
-    container = [1, 2, 3, 4]
-    container = add_item((9, 11), container, 1)
-    # container is now [1, (9, 11), 2, 3, 4]
+    container = {1: 'a', 2: 'b', 3: 'c', 4: 'd'}
+    container = add_item((9, 'e'), container, 1)
+    # container is now {1: 'a', 2: 'b', 3: 'c', 4: 'd', 9: 'e'}
     print(container)
