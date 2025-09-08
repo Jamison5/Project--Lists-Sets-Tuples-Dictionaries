@@ -48,7 +48,7 @@ def access_item(item: int, container):
 
     '''
 
-    if isinstance(container, set):
+    if isinstance(container, set):      # sets can not be indexed because they are unordered
 
         return item in container
     
