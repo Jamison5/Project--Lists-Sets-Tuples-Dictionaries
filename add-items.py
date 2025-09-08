@@ -62,6 +62,13 @@ def add_item(item, container, position=None):
             container[item] = None
             
 
+    elif isinstance(container, set):
+
+        try:
+            container.add(item)
+        except Exception:
+            print('Your item is an itterable object and will be handled with .update')
+            container.update(item)
     else:
 
         pass
@@ -70,14 +77,7 @@ def add_item(item, container, position=None):
 
 if __name__ == '__main__':
 
-    container = {1: 'a', 2: 'b', 3: 'c', 4: 'd'}
-    container = add_item(9, container)
-    # container is now {1: 'a', 2: 'b', 3: 'c', 4: 'd', 9: None}
-    print(container)
-
-    # print(dir(int))
-
-    container = {1: 'a', 2: 'b', 3: 'c', 4: 'd'}
-    container = add_item((9, 'e'), container, 1)
-    # container is now {1: 'a', 2: 'b', 3: 'c', 4: 'd', 9: 'e'}
+    container = {1, 2, 3, 4}
+    container = add_item({9,10}, container)
+    # container is now {1, 2, 3, 4, 9}
     print(container)
