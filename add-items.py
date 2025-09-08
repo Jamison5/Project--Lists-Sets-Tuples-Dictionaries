@@ -50,8 +50,10 @@ def add_item(item, container, position=None):
         
         if position == None:            
             container.append(item)
+            return container
         else:
             container.insert(position, item)
+            return container
 
     else:
 
