@@ -50,30 +50,32 @@ def add_item(item, container, position=None):
         
         if position == None:            
             container.append(item)
-            return container
         else:
             container.insert(position, item)
-            return container
 
     elif isinstance(container, dict):
 
-        if len(item) == 2:
+        if '__len__' in dir(item) and len(item) == 2:
             key, value = item
             container[key] = value
-            return container
         else:
             container[item] = None
+            
 
     else:
 
         pass
 
+    return container
+
 if __name__ == '__main__':
 
-    # container = {1: 'a', 2: 'b', 3: 'c', 4: 'd'}
-    # container = add_item(9, container)
+    container = {1: 'a', 2: 'b', 3: 'c', 4: 'd'}
+    container = add_item(9, container)
     # container is now {1: 'a', 2: 'b', 3: 'c', 4: 'd', 9: None}
-    # print(container)
+    print(container)
+
+    # print(dir(int))
 
     container = {1: 'a', 2: 'b', 3: 'c', 4: 'd'}
     container = add_item((9, 'e'), container, 1)
