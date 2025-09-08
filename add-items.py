@@ -58,8 +58,9 @@ def add_item(item, container, position=None):
     elif isinstance(container, dict):
 
         if len(item) == 2:
-            for key, value in item:
-                container[key] = value
+            key, value = item
+            container[key] = value
+            return container
         else:
             container[item] = None
 
@@ -69,10 +70,10 @@ def add_item(item, container, position=None):
 
 if __name__ == '__main__':
 
-    container = {1: 'a', 2: 'b', 3: 'c', 4: 'd'}
-    container = add_item(9, container)
+    # container = {1: 'a', 2: 'b', 3: 'c', 4: 'd'}
+    # container = add_item(9, container)
     # container is now {1: 'a', 2: 'b', 3: 'c', 4: 'd', 9: None}
-    print(container)
+    # print(container)
 
     container = {1: 'a', 2: 'b', 3: 'c', 4: 'd'}
     container = add_item((9, 'e'), container, 1)
