@@ -85,17 +85,17 @@ def update_item(
         else:
             container[orig_item] = new_item
 
+    elif isinstance(container, set):
+        if orig_item in container:
+            container.remove(orig_item)
+            container.add(new_item)
+
     return container
 
 
 if __name__ == "__main__":
 
-    container = {1: "a", 2: "b", 3: "c", 4: "d"}
-    container = update_item(1, "h", container)
-    # container is now {1: 'h', 2: 'b', 3: 'c', 4: 'd'}
-    print(container)
-
-    container = {1: "a", 2: "b", 3: "c", 4: "d"}
-    container = update_item(1, (9, "e"), container)
-    # container is now {9: 'e', 2: 'b', 3: 'c', 4: 'd'}
+    container = {1, 2, 3, 4, 5}
+    container = update_item(5, 9, container)
+    # container is now {1, 2, 3, 4, 9}
     print(container)
