@@ -1,44 +1,67 @@
-def remove_item():
+def remove_item(item: object, container: object, multi: bool=True) -> object:
     '''
-    Next, you are going to implement the remove_item function that removes an item from any basic Python container (list, set, tuple, dict). The function has the following parameters:
+    Next, you are going to implement the remove_item function that removes an item from any basic Python container (list, set, tuple, dict). The function has the following 
+    parameters:
 
     item: The object to be removed from the container.
 
     container: The container from which the item is removed (list, set, tuple, dict).
 
-    multi: The bool specifier indicating if only the first occurrence of the item should be removed (False) or all of them (True). This parameter has a default value set to True.
+    multi: The bool specifier indicating if only the first occurrence of the item should be removed (False) or all of them (True). This parameter has a default value set to 
+    True.
 
     The function returns the updated container (or its copy if necessary).
 
     This is how the remove_item function handles removing an item from the individual container types:
 
-    List: All the objects in the list that are equal to the item are removed from the list. In case, the multi argument is set to False only the first occurrence is removed. For example:
+    List: All the objects in the list that are equal to the item are removed from the list. In case, the multi argument is set to False only the first occurrence is removed.
+    For example:
 
     container = [1, 2, 3, 4, 1]
     container = remove_item(1, container, False)
-    # container is now [2, 3, 4, 1]
+    container is now [2, 3, 4, 1]
 
     container = [1, 2, 3, 4, 1]
     container = remove_item(1, container)
-    # container is now [2, 3, 4]
+    container is now [2, 3, 4]
 
     Dictionary: The key equal to the item is removed from the dictionary. The multi parameter is ignored. For example:
 
     container = {1: 'a', 2: 'b', 3: 'c', 4: 'd'}
     container = remove_item(2, container)
-    # container is now {1: 'a', 3: 'c', 4: 'd'}
+    container is now {1: 'a', 3: 'c', 4: 'd'}
 
     Set: The object that is equal to the item is removed from the set. The multi parameter is ignored. For example:
 
     container = {1, 2, 3, 4}
     container = remove_item(3, container)
-    # container is now {1, 2, 4}
+    container is now {1, 2, 4}
 
     Tuple: All the objects in the tuple that are equal to the item are removed. If, the multi argument is set to False only the first occurrence is removed. For example:
 
     container = (1, 2, 3, 4)
     container = remove_item(4, container)
-    # container is now (1, 2, 3)
+    container is now (1, 2, 3)
 
     '''
-    pass
+    if isinstance(container, list):
+        if multi:
+            for object in container:
+                if object == item:
+                    container.remove(object)
+        else:
+            container.remove(item)
+    
+    return container
+
+if __name__ == '__main__':
+
+    container = [1, 2, 3, 4, 1]
+    container = remove_item(1, container, False)
+    # container is now [2, 3, 4, 1]
+    print(container)
+
+    container = [1, 2, 3, 4, 1]
+    container = remove_item(1, container)
+    # container is now [2, 3, 4]
+    print(container)
