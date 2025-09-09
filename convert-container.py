@@ -149,47 +149,105 @@ def convert_container(container: object, container_type: str) -> object:
                 container = tuple(container)
             elif container_type == "dict":
                 output_dict = {}
-                if (
-                    "__len__" in dir(new_list[0])
-                    and len(new_list[0]) == 2
-                    and type(new_list[0]) == tuple
-                ):
-                    for item in new_list:
-                        key, value = item
+                for index in new_list:
+                    if type(index) == tuple and len(index) == 2:
+                        key, value = index
                         output_dict[key] = value
-                elif type(new_list[0]) == int or type(new_list[0]) == str:
-                    for item in container:
-                        output_dict[item] = None
-                else:
-                    print(
-                        "Please enter a properly formated set, do not provide a list of itterables and none itterables."
-                    )
+                    else:
+                        output_dict[index] = None
                 container = output_dict
+        elif isinstance(container, tuple):
+            if container_type == "list":
+                container = list(container)
+            elif container_type == "set":
+                container = set(container)
+            elif container_type == "dict":
+                output_dict = {}
+                new_list = list(container)
+                new_list.sort
+                for index in new_list:
+                    if type(index) == tuple and len(index) == 2:
+                        key, value = index
+                        output_dict[key] = value
+                    else:
+                        output_dict[index] = None
+                container = output_dict
+
+        elif isinstance(container, dict):
+            new_list = []
+            for key, value in container.items():
+                new_list.append((key, value))
+            if container_type == "list":
+                container = new_list
+            elif container_type == "set":
+                container = set(new_list)
+            elif container_type == "tuple":
+                container = tuple(new_list)
 
     return container
 
 
 if __name__ == "__main__":
-    container = {1, 2, 3, 4}
-    new_container = convert_container(container, "list")
-    # new_container is now [1, 2, 3, 4]
-    print(new_container)
+    assert convert_container([1, 2, 3, 4], "dict") == {
+        1: None,
+        2: None,
+        3: None,
+        4: None,
+    }
+    assert convert_container([1, (2, "a"), 3, (4, "b")], "dict") == {
+        1: None,
+        2: "a",
+        3: None,
+        4: "b",
+    }
+    assert convert_container([1, 2, 3, 4], "set") == {1, 2, 3, 4}
+    assert convert_container([1, 2, 3, 4], "tuple") == (1, 2, 3, 4)
 
-    container = {1, 2, 3, 4}
-    new_container = convert_container(container, "dict")
-    # new_container is now {1: None, 2: None, 3: None, 4: None}
-    print(new_container)
+    orig_dict = {1: "a", 2: "b", 3: "c", 4: "d"}
+    new_list = [(1, "a"), (2, "b"), (3, "c"), (4, "d")]
+    assert sorted(convert_container(orig_dict, "list")) == new_list
 
-    container = {(1, "a"), (2, "b"), (3, "c"), (4, "d")}
-    new_container = convert_container(container, "dict")
-    # new_container is now {1: 'a', 2: 'b', 3: 'c', 4: 'd'}
-    print(new_container)
+    orig_dict = {1: "a", 2: "b", 3: "c", 4: "d"}
+    new_set = {(1, "a"), (2, "b"), (3, "c"), (4, "d")}
+    assert convert_container(orig_dict, "set") == new_set
 
-    container = {1, 2, 3, 4}
-    new_container = convert_container(container, "tuple")
-    # new_container is now (1, 2, 3, 4)
-    print(new_container)
+    orig_dict = {1: "a", 2: "b", 3: "c", 4: "d"}
+    ref_tuple = ((1, "a"), (2, "b"), (3, "c"), (4, "d"))
+    new_tuple = convert_container(orig_dict, "tuple")
+    assert type(new_tuple) is tuple
+    assert tuple(sorted(new_tuple)) == ref_tuple
 
-    container = [(1, "a"), 2, 3, 4, ("d", 2)]
-    new_container = convert_container(container, "dict")
-    print(new_container)
+    assert sorted(convert_container({1, 2, 3, 4}, "list")) == [1, 2, 3, 4]
+
+    assert convert_container({1, 2, 3, 4}, "dict") == {
+        1: None,
+        2: None,
+        3: None,
+        4: None,
+    }
+
+    assert convert_container({1, (2, "a"), 3, (4, "b")}, "dict") == {
+        1: None,
+        2: "a",
+        3: None,
+        4: "b",
+    }
+
+    new_tuple = convert_container({1, 2, 3, 4}, "tuple")
+    assert type(new_tuple) is tuple
+    assert tuple(sorted(new_tuple)) == (1, 2, 3, 4)
+
+    assert convert_container((1, 2, 3, 4), "list") == [1, 2, 3, 4]
+    assert convert_container((1, 2, 3, 4), "dict") == {
+        1: None,
+        2: None,
+        3: None,
+        4: None,
+    }
+    assert convert_container((1, (2, "a"), 3, (4, "b")), "dict") == {
+        1: None,
+        2: "a",
+        3: None,
+        4: "b",
+    }
+    assert convert_container((1, 2, 3, 4), "set") == {1, 2, 3, 4}
