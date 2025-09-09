@@ -89,7 +89,12 @@ def add_item(item, container, position=None):
 
 if __name__ == '__main__':
 
-    container = (1, 2, 3, 4)
-    container = add_item(9, container)
-    # container is now (1, (9, 11), 2, 3, 4)
-    print(container)
+    assert add_item(5, [1, 2, 3, 4]) == [1, 2, 3, 4, 5]
+    assert add_item('c', ['a', 'b', 'd', 'e'], 2) == ['a', 'b', 'c', 'd', 'e']
+    container = {1: 'a', 3: 'c', 4: 'd'}
+    assert (add_item(2, container) == {1: 'a', 2: None, 3: 'c', 4: 'd'})
+    container = {1: 'a', 3: 'c', 4: 'd'}
+    assert (add_item((2, 'b'), container) == {1: 'a', 2: 'b', 3: 'c', 4: 'd'})
+    assert add_item(2, {1, 4}) == {1, 4, 2}
+    assert add_item(5, (1, 2, 3, 4)) == (1, 2, 3, 4, 5)
+    assert add_item('c', ('a', 'b', 'd', 'e'), 2) == ('a', 'b', 'c', 'd', 'e')
