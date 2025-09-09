@@ -59,4 +59,25 @@ def update_item(
     # container is now ((9, 11), 2, 3, 4, 1)
 
     """
-    pass  # to do
+    if isinstance(container, list):
+        if multi:
+            for index, value in enumerate(container):
+                if container[index] == orig_item:
+                    container[index] = new_item
+        else:
+            orig_item_index = container.index(orig_item)
+            container[orig_item_index] = new_item
+    return container
+
+
+if __name__ == "__main__":
+
+    container = [1, 2, 3, 4, 1]
+    container = update_item(1, 9, container)
+    # container is now [9, 2, 3, 4, 9]
+    print(container)
+
+    container = [1, 2, 3, 4, 1]
+    container = update_item(1, 9, container, False)
+    # container is now [9, 2, 3, 4, 1]
+    print(container)
