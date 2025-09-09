@@ -61,23 +61,41 @@ def update_item(
     """
     if isinstance(container, list):
         if multi:
-            for index, value in enumerate(container):
+            for index, _ in enumerate(container):
                 if container[index] == orig_item:
                     container[index] = new_item
         else:
             orig_item_index = container.index(orig_item)
             container[orig_item_index] = new_item
+
+    elif isinstance(container, dict):
+        if (
+            "__len__" in dir(new_item)
+            and len(new_item) == 2
+            and isinstance(new_item, tuple)
+        ):
+            new_key, new_value = new_item
+            new_dict = {}
+            for key, value in container.items():
+                if key == orig_item:
+                    new_dict[new_key] = new_value
+                else:
+                    new_dict[key] = value
+            container = new_dict
+        else:
+            container[orig_item] = new_item
+
     return container
 
 
 if __name__ == "__main__":
 
-    container = [1, 2, 3, 4, 1]
-    container = update_item(1, 9, container)
-    # container is now [9, 2, 3, 4, 9]
+    container = {1: "a", 2: "b", 3: "c", 4: "d"}
+    container = update_item(1, "h", container)
+    # container is now {1: 'h', 2: 'b', 3: 'c', 4: 'd'}
     print(container)
 
-    container = [1, 2, 3, 4, 1]
-    container = update_item(1, 9, container, False)
-    # container is now [9, 2, 3, 4, 1]
+    container = {1: "a", 2: "b", 3: "c", 4: "d"}
+    container = update_item(1, (9, "e"), container)
+    # container is now {9: 'e', 2: 'b', 3: 'c', 4: 'd'}
     print(container)
