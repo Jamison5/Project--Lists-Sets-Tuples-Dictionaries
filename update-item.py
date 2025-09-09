@@ -110,12 +110,12 @@ def update_item(
 
 if __name__ == "__main__":
 
-    container = (1, 2, 3, 4, 1)
-    container = update_item(1, (9, 11), container)
-    # container is now ((9, 11), 2, 3, 4, (9, 11))
-    print(container)
-
-    container = (1, 2, 3, 4, 1)
-    container = update_item(1, (9, 11), container, False)
-    # container is now ((9, 11), 2, 3, 4, 1)
-    print(container)
+    assert update_item(1, 8, [1, 2, 3, 4, 1]) == [8, 2, 3, 4, 8]
+    assert update_item(1, 8, [1, 2, 3, 4, 1], False) == [8, 2, 3, 4, 1]
+    assert update_item(2, 8, {1, 2, 3, 4}) == {1, 8, 3, 4}
+    assert update_item(2, 8, {1, 2, 3, 4}, multi=False) == {1, 8, 3, 4}
+    container = {1: "a", 2: "b", 3: "c", 4: "d"}
+    assert update_item(1, "h", container) == {1: "h", 2: "b", 3: "c", 4: "d"}
+    container = {1: "a", 2: "b", 3: "c", 4: "d"}
+    assert update_item(1, (5, "h"), container) == {5: "h", 2: "b", 3: "c", 4: "d"}
+    assert update_item(1, 8, (1, 2, 3, 4, 1)) == (8, 2, 3, 4, 8)
