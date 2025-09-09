@@ -1,5 +1,5 @@
 def add_item(item, container, position=None):
-    '''
+    """
     Next, you are going to implement the add_item function that adds an item to any basic Python container (list, set, tuple, dict). The function has the following parameters:
 
     item: The object to be inserted into the container. The item is expected to be of any type that can be added to the respective container.
@@ -45,33 +45,32 @@ def add_item(item, container, position=None):
     container = add_item((9, 11), container, 1)
     # container is now (1, (9, 11), 2, 3, 4)
 
-    '''
+    """
     if isinstance(container, list):
-        
-        if position == None:            
+
+        if position == None:
             container.append(item)
         else:
             container.insert(position, item)
 
     elif isinstance(container, dict):
 
-        if '__len__' in dir(item) and len(item) == 2:
+        if "__len__" in dir(item) and len(item) == 2:
             key, value = item
             container[key] = value
         else:
             container[item] = None
-            
 
     elif isinstance(container, set):
 
         try:
             container.add(item)
         except Exception:
-            print('Your item is an itterable object and will be handled with .update')
+            print("Your item is an itterable object and will be handled with .update")
             container.update(item)
 
     elif isinstance(container, tuple):
-        
+
         if position == None:
             output = list(container)
             output.append(item)
@@ -83,18 +82,19 @@ def add_item(item, container, position=None):
 
     else:
 
-        print('Oops I messed up.')
+        print("Oops I messed up.")
 
     return container
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
 
     assert add_item(5, [1, 2, 3, 4]) == [1, 2, 3, 4, 5]
-    assert add_item('c', ['a', 'b', 'd', 'e'], 2) == ['a', 'b', 'c', 'd', 'e']
-    container = {1: 'a', 3: 'c', 4: 'd'}
-    assert (add_item(2, container) == {1: 'a', 2: None, 3: 'c', 4: 'd'})
-    container = {1: 'a', 3: 'c', 4: 'd'}
-    assert (add_item((2, 'b'), container) == {1: 'a', 2: 'b', 3: 'c', 4: 'd'})
+    assert add_item("c", ["a", "b", "d", "e"], 2) == ["a", "b", "c", "d", "e"]
+    container = {1: "a", 3: "c", 4: "d"}
+    assert add_item(2, container) == {1: "a", 2: None, 3: "c", 4: "d"}
+    container = {1: "a", 3: "c", 4: "d"}
+    assert add_item((2, "b"), container) == {1: "a", 2: "b", 3: "c", 4: "d"}
     assert add_item(2, {1, 4}) == {1, 4, 2}
     assert add_item(5, (1, 2, 3, 4)) == (1, 2, 3, 4, 5)
-    assert add_item('c', ('a', 'b', 'd', 'e'), 2) == ('a', 'b', 'c', 'd', 'e')
+    assert add_item("c", ("a", "b", "d", "e"), 2) == ("a", "b", "c", "d", "e")

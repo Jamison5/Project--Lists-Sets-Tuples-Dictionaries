@@ -1,6 +1,6 @@
 def access_item(item: int, container):
-    '''
-    Next, you are going to implement the access_item function that retrieves an item from any basic Python container (list, set, tuple, dict). The function has the following 
+    """
+    Next, you are going to implement the access_item function that retrieves an item from any basic Python container (list, set, tuple, dict). The function has the following
     parameters:
 
     item: An integer value as
@@ -13,7 +13,7 @@ def access_item(item: int, container):
 
     container: The container from which the item is retrieved (which can be list, set, tuple, dict).
 
-    The function returns the element stored under the respective index (list, tuple) or key (dict), or it returns a bool indicating if the element is present in the container 
+    The function returns the element stored under the respective index (list, tuple) or key (dict), or it returns a bool indicating if the element is present in the container
     (set).
 
     This is how the access_item function should handle retrieving an item from the individual container types:
@@ -46,21 +46,22 @@ def access_item(item: int, container):
     element = access_item(1, container)
     # element is now 2
 
-    '''
+    """
 
-    if isinstance(container, set):      # sets can not be indexed because they are unordered
+    if isinstance(container, set):  # sets can not be indexed because they are unordered
 
         return item in container
-    
+
     else:
 
         return container[item]
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
 
     assert access_item(2, [1, 2, 3, 4]) == 3
-    container = {1: 'a', 3: 'c', 4: 'd'}
-    assert access_item(3, container) == 'c'
+    container = {1: "a", 3: "c", 4: "d"}
+    assert access_item(3, container) == "c"
     assert access_item(2, {1, 2, 3, 4}) == True
     assert access_item(5, {1, 2, 3, 4}) == False
     assert access_item(2, (1, 2, 3, 4)) == 3
