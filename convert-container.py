@@ -1,4 +1,4 @@
-def convert_container(container: object, container_type: str):
+def convert_container(container: object, container_type: str) -> object:
     """
     Finally, you are going to implement the convert_container function that transforms any basic Python container (list, set, tuple, dict) to any of the basic container types.
     The function has the following parameters:
@@ -122,13 +122,26 @@ def convert_container(container: object, container_type: str):
     # new_container is now {1, 2, 3, 4}
 
     """
-    type_dict = {"list": []}
-    pass
+    type_dict = {"list": [], "set": set(), "dict": {}, "tuple": ()}
+
+    if type(type_dict[container_type]) == type(container):
+        pass
+    return container
 
 
 if __name__ == "__main__":
-    type_dict = {"list": []}
+    container = [(1, "a"), (2, "b"), (3, "c"), (4, "d")]
+    new_container = convert_container(container, "list")
+    print(new_container)
 
-    empty_container = []
+    container = {1: "a", 2: "b", 3: "c", 4: "d"}
+    new_container = convert_container(container, "dict")
+    print(new_container)
 
-    print(type(type_dict["list"]) == type(empty_container))
+    container = {2, 4, 5, 6}
+    new_container = convert_container(container, "set")
+    print(new_container)
+
+    container = (1, 2, 3, 4, 5)
+    new_container = convert_container(container, "tuple")
+    print(new_container)
