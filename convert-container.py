@@ -134,20 +134,35 @@ def convert_container(container: object, container_type: str) -> object:
                 container = tuple(container)
             elif container_type == "dict":
                 output_dict = {}
+                for index in container:
+                    if type(index) == tuple and len(index) == 2:
+                        key, value = index
+                        output_dict[key] = value
+                    else:
+                        output_dict[index] = None
+                container = output_dict
+        elif isinstance(container, set):
+            new_list = list(container)
+            if container_type == "list":
+                container = list(container)
+            elif container_type == "tuple":
+                container = tuple(container)
+            elif container_type == "dict":
+                output_dict = {}
                 if (
-                    "__len__" in dir(container[0])
-                    and len(container[0]) == 2
-                    and type(container[0] == tuple)
+                    "__len__" in dir(new_list[0])
+                    and len(new_list[0]) == 2
+                    and type(new_list[0]) == tuple
                 ):
-                    for item in container:
+                    for item in new_list:
                         key, value = item
                         output_dict[key] = value
-                elif type(container[0]) == int or type(container[0] == str):
+                elif type(new_list[0]) == int or type(new_list[0]) == str:
                     for item in container:
                         output_dict[item] = None
                 else:
                     print(
-                        "Please enter a properly formated list of all string, do not provide a list of itterables and none itterables."
+                        "Please enter a properly formated set, do not provide a list of itterables and none itterables."
                     )
                 container = output_dict
 
@@ -155,12 +170,26 @@ def convert_container(container: object, container_type: str) -> object:
 
 
 if __name__ == "__main__":
-    container = [1, 2, 3, 4]
+    container = {1, 2, 3, 4}
+    new_container = convert_container(container, "list")
+    # new_container is now [1, 2, 3, 4]
+    print(new_container)
+
+    container = {1, 2, 3, 4}
     new_container = convert_container(container, "dict")
     # new_container is now {1: None, 2: None, 3: None, 4: None}
     print(new_container)
 
-    container = [(1, "a"), (2, "b"), (3, "c"), (4, "d")]
+    container = {(1, "a"), (2, "b"), (3, "c"), (4, "d")}
     new_container = convert_container(container, "dict")
     # new_container is now {1: 'a', 2: 'b', 3: 'c', 4: 'd'}
+    print(new_container)
+
+    container = {1, 2, 3, 4}
+    new_container = convert_container(container, "tuple")
+    # new_container is now (1, 2, 3, 4)
+    print(new_container)
+
+    container = [(1, "a"), 2, 3, 4, ("d", 2)]
+    new_container = convert_container(container, "dict")
     print(new_container)
