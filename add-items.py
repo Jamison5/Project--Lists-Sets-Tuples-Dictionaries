@@ -69,15 +69,27 @@ def add_item(item, container, position=None):
         except Exception:
             print('Your item is an itterable object and will be handled with .update')
             container.update(item)
+
+    elif isinstance(container, tuple):
+        
+        if position == None:
+            output = list(container)
+            output.append(item)
+            container = tuple(output)
+        else:
+            output = list(container)
+            output.insert(position, item)
+            container = tuple(output)
+
     else:
 
-        pass
+        print('Oops I messed up.')
 
     return container
 
 if __name__ == '__main__':
 
-    container = {1, 2, 3, 4}
-    container = add_item({9,10}, container)
-    # container is now {1, 2, 3, 4, 9}
+    container = (1, 2, 3, 4)
+    container = add_item(9, container)
+    # container is now (1, (9, 11), 2, 3, 4)
     print(container)
