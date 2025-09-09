@@ -126,22 +126,41 @@ def convert_container(container: object, container_type: str) -> object:
 
     if type(type_dict[container_type]) == type(container):
         pass
+    else:
+        if isinstance(container, list):
+            if container_type == "set":
+                container = set(container)
+            elif container_type == "tuple":
+                container = tuple(container)
+            elif container_type == "dict":
+                output_dict = {}
+                if (
+                    "__len__" in dir(container[0])
+                    and len(container[0]) == 2
+                    and type(container[0] == tuple)
+                ):
+                    for item in container:
+                        key, value = item
+                        output_dict[key] = value
+                elif type(container[0]) == int or type(container[0] == str):
+                    for item in container:
+                        output_dict[item] = None
+                else:
+                    print(
+                        "Please enter a properly formated list of all string, do not provide a list of itterables and none itterables."
+                    )
+                container = output_dict
+
     return container
 
 
 if __name__ == "__main__":
-    container = [(1, "a"), (2, "b"), (3, "c"), (4, "d")]
-    new_container = convert_container(container, "list")
-    print(new_container)
-
-    container = {1: "a", 2: "b", 3: "c", 4: "d"}
+    container = [1, 2, 3, 4]
     new_container = convert_container(container, "dict")
+    # new_container is now {1: None, 2: None, 3: None, 4: None}
     print(new_container)
 
-    container = {2, 4, 5, 6}
-    new_container = convert_container(container, "set")
-    print(new_container)
-
-    container = (1, 2, 3, 4, 5)
-    new_container = convert_container(container, "tuple")
+    container = [(1, "a"), (2, "b"), (3, "c"), (4, "d")]
+    new_container = convert_container(container, "dict")
+    # new_container is now {1: 'a', 2: 'b', 3: 'c', 4: 'd'}
     print(new_container)
