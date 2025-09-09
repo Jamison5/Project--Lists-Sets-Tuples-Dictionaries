@@ -51,17 +51,15 @@ def remove_item(item: object, container: object, multi: bool=True) -> object:
                     container.remove(object)
         else:
             container.remove(item)
+
+    elif isinstance(container, dict):
+        del container[item]
     
     return container
 
 if __name__ == '__main__':
 
-    container = [1, 2, 3, 4, 1]
-    container = remove_item(1, container, False)
-    # container is now [2, 3, 4, 1]
-    print(container)
-
-    container = [1, 2, 3, 4, 1]
-    container = remove_item(1, container)
-    # container is now [2, 3, 4]
+    container = {1: 'a', 2: 'b', 3: 'c', 4: 'd'}
+    container = remove_item(2, container)
+    # container is now {1: 'a', 3: 'c', 4: 'd'}
     print(container)
