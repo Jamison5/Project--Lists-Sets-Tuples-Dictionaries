@@ -57,12 +57,22 @@ def remove_item(item: object, container: object, multi: bool=True) -> object:
 
     elif isinstance(container, set):
         container.remove(item)
+
+    elif isinstance(container, tuple):
+        output = list(container)
+        if multi:
+            for object in output:
+                if object == item:
+                    output.remove(object)
+        else:
+            output.remove(item)
+        container = tuple(output)
     
     return container
 
 if __name__ == '__main__':
 
-    container = {1, 2, 3, 4}
-    container = remove_item(3, container)
-    # container is now {1, 2, 4}
+    container = ((1, 1), 2, 3, 4)
+    container = remove_item((1, 1), container)
+    # container is now (1, 2, 3)
     print(container)
