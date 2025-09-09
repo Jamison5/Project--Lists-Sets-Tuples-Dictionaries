@@ -90,12 +90,32 @@ def update_item(
             container.remove(orig_item)
             container.add(new_item)
 
+    elif isinstance(container, tuple):
+        if multi:
+            output = []
+            for _, value in enumerate(container):
+                if value == orig_item:
+                    output.append(new_item)
+                else:
+                    output.append(value)
+            container = tuple(output)
+        else:
+            output = list(container)
+            orig_item_index = output.index(orig_item)
+            output[orig_item_index] = new_item
+            container = tuple(output)
+
     return container
 
 
 if __name__ == "__main__":
 
-    container = {1, 2, 3, 4, 5}
-    container = update_item(5, 9, container)
-    # container is now {1, 2, 3, 4, 9}
+    container = (1, 2, 3, 4, 1)
+    container = update_item(1, (9, 11), container)
+    # container is now ((9, 11), 2, 3, 4, (9, 11))
+    print(container)
+
+    container = (1, 2, 3, 4, 1)
+    container = update_item(1, (9, 11), container, False)
+    # container is now ((9, 11), 2, 3, 4, 1)
     print(container)
