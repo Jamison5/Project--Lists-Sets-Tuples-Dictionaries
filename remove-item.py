@@ -72,7 +72,10 @@ def remove_item(item: object, container: object, multi: bool=True) -> object:
 
 if __name__ == '__main__':
 
-    container = ((1, 1), 2, 3, 4)
-    container = remove_item((1, 1), container)
-    # container is now (1, 2, 3)
-    print(container)
+    assert remove_item(1, [1, 2, 3, 4, 1]) == [2, 3, 4]
+    assert remove_item(1, [1, 2, 3, 4, 1], False) == [2, 3, 4, 1]
+    container = {1: 'a', 2: 'b', 3: 'c', 4: 'd'}
+    assert remove_item(2, container) == {1: 'a', 3: 'c', 4: 'd'}
+    assert remove_item(3, {1, 2, 3, 4}) == {1, 2, 4}
+    assert remove_item(1, (1, 2, 3, 4, 1)) == (2, 3, 4)
+    assert remove_item(1, (1, 2, 3, 4, 1), False) == (2, 3, 4, 1)
